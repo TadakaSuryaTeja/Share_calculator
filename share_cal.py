@@ -19,12 +19,16 @@ class NameForm(FlaskForm):
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
+    entry = 0
+    target = 0
+    stop_loss = 0
     form = NameForm()
     if form.validate_on_submit():
         session['name'] = form.optionname.data
         session['cmp'] = form.cmp.data
         return redirect(url_for('index'))
-    entry, target, stop_loss = share_calculate(session.get('cmp'))
+    if session.get('cmp') is not None:
+        entry, target, stop_loss = share_calculate(session.get('cmp'))
 
     return render_template('index.html',
                            form=form,
@@ -35,7 +39,7 @@ def index():
                            stop_loss=stop_loss)
 
 
-def share_calculate(cmp):
+def share_calculate(cmp=0):
     """
     Calculates the share price based on the day
     :cmp: Current Market Price
@@ -44,9 +48,9 @@ def share_calculate(cmp):
     # Extract today date
     cmp = float(cmp)
     today = date.today()
-    entry = 0
-    target = 0
-    stop_loss = 0
+    entry = 0.0
+    target = 0.0
+    stop_loss = 0.0
     if today.weekday() == 0:
         entry = 1.3
         target = 1.15
@@ -72,4 +76,4 @@ def share_calculate(cmp):
     else:
         print("Today is: Sunday")
 
-    return entry*cmp, target*cmp, stop_loss*cmp
+    return entry * cmp, target * cmp, stop_loss * cmp
