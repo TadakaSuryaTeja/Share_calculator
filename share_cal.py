@@ -23,6 +23,8 @@ def index():
     target = 0
     stop_loss = 0
     form = NameForm()
+    today = date.today()
+    msg = ""
     if form.validate_on_submit():
         session['name'] = form.optionname.data
         session['cmp'] = form.cmp.data
@@ -30,13 +32,18 @@ def index():
     if session.get('cmp') is not None:
         entry, target, stop_loss = share_calculate(session.get('cmp'))
 
+    if today == 5:
+        msg = "Today is Saturday"
+    elif today == 6:
+        msg = "Today is Sunday"
     return render_template('index.html',
                            form=form,
                            name=session.get('name'),
                            cmp=session.get('cmp'),
                            entry=entry,
                            target=target,
-                           stop_loss=stop_loss)
+                           stop_loss=stop_loss,
+                           msg=msg)
 
 
 def share_calculate(cmp=0):
