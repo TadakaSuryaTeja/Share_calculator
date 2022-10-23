@@ -32,10 +32,10 @@ def index():
     if session.get('cmp') is not None:
         entry, target, stop_loss = share_calculate(session.get('cmp'))
 
-    if today == 5:
-        msg = "Today is Saturday"
-    elif today == 6:
-        msg = "Today is Sunday"
+    if today.weekday() == 5:
+        msg = "Today is Saturday(Market Closed)!!!"
+    elif today.weekday() == 6:
+        msg = "Today is Sunday(Market Closed)!!!"
     return render_template('index.html',
                            form=form,
                            name=session.get('name'),
