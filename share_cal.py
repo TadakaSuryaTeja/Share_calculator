@@ -59,23 +59,23 @@ def share_calculate(cmp=0):
     target = 0.0
     stop_loss = 0.0
     if today.weekday() == 0:
-        entry = 1.3
+        entry = 1.3 * cmp
         target = 1.15
         stop_loss = 0.85
     elif today.weekday() == 1:
-        entry = 1.3
+        entry = 1.3 * cmp
         target = 1.15
         stop_loss = 0.85
     elif today.weekday() == 2:
-        entry = 1.4
+        entry = 1.4 * cmp
         target = 1.2
         stop_loss = 0.8
     elif today.weekday() == 3:
-        entry = 1.5
+        entry = 1.5 * cmp
         target = 1.25
         stop_loss = 0.75
     elif today.weekday() == 4:
-        entry = 1.2
+        entry = 1.2 * cmp
         target = 1.1
         stop_loss = 0.9
     elif today.weekday() == 5:
@@ -83,4 +83,4 @@ def share_calculate(cmp=0):
     else:
         print("Today is: Sunday")
 
-    return entry * cmp, target * cmp, stop_loss * cmp
+    return entry, target * entry, stop_loss * entry
